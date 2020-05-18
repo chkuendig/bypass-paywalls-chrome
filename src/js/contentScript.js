@@ -310,6 +310,17 @@ if (matchDomain('rep.repubblica.it')) {
 } else if (matchDomain('hbr.org')) {
   const banner = document.querySelector('.persistent-banner');
   removeDOMElement(banner);
+} else if (matchDomain('businessinsider.com')) {
+  const element = document.querySelector('#piano-inline-content-wrapper');
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach(function(mutation) {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+        document.getElementById('piano-inline-content-wrapper').style.display = 'block';
+        removeDOMElement(document.getElementsByClassName('piano-freemium'));
+      }
+    });
+  });
+  observer.observe(element, { attributes: true });
 }
 
 function matchDomain (domains) {
